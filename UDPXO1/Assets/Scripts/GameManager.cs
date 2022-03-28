@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
@@ -33,7 +34,7 @@ public class GameManager : MonoBehaviour
     [Header("Mark Color")]
     [SerializeField] private Color colorx;
     [SerializeField] private Color coloro;
-
+    Box box1;
     public Mark[] marks;
     private Camera cam;
     private Mark currentMark;
@@ -63,8 +64,12 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("got network message: " + message);
 
-        var messageInt = int.Parse(message);
-        messageInt = (int)currentMark;
+        string catchNumbers = new string(message.Where(char.IsDigit).ToArray());
+        if (playernum == 1)
+        {
+            box1.SetMarked(spritex, currentMark, colorx);
+        }
+        else box1.SetMarked(spriteo, currentMark, coloro);
 
 
     }
@@ -76,7 +81,7 @@ public class GameManager : MonoBehaviour
         networkManager.SendMessage($"{position}");// your job to finish it
     }
 
-    private void Update()
+    void Update()
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
@@ -98,7 +103,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void HitBox (Box box)
+    public void HitBox(Box box)
     {
         if (!box.isMarked)
         {
