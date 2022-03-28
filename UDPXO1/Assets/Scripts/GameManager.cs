@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,8 +19,24 @@ public class GameManager : MonoBehaviour
     public int playernum = 0;
     public int player1Port = 40000;
     public int player2Port = 40001;
-    public bool XTurn = true;
+    public bool MyTurn = true;
     public NetworkManager networkManager; //don't forget to drag in inspector
+
+    [Header("Input Settings")]
+    [SerializeField] private LayerMask boxLayermask;
+    [SerializeField] private float touchRadius;
+
+    [Header("Mark Sprites")]
+    [SerializeField] private Sprite spritex;
+    [SerializeField] private Sprite spriteo;
+
+    [Header("Mark Color")]
+    [SerializeField] private Color colorx;
+    [SerializeField] private Color coloro;
+
+    public Mark[] marks;
+    private Camera cam;
+    private Mark currentMark;
 
     public void AssignPlayer(int index)
     {
@@ -28,17 +45,19 @@ public class GameManager : MonoBehaviour
             playernum = index;
             networkManager.ListeningPort = player1Port;
             networkManager.SendingPort = player2Port;
-            XTurn = true;
+            MyTurn = true;
         }
         else if (index == 2)
         {
             playernum = index;
             networkManager.ListeningPort = player2Port;
             networkManager.SendingPort = player1Port;
-            XTurn = false;
+            MyTurn = false;
         }
         networkManager.StartUDP();
     }
+
+
 
     public void GotNetworkMessage(string message)
     {
@@ -50,8 +69,6 @@ public class GameManager : MonoBehaviour
         //    //Do something
         //}
     }
-
-
     public void PositionClicked(int position)
     {
         //draw the shape on the UI
@@ -60,7 +77,6 @@ public class GameManager : MonoBehaviour
         networkManager.SendMessage("");// your job to finish it
     }
 
-    //for debug purpouses only
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.A))
@@ -71,5 +87,45 @@ public class GameManager : MonoBehaviour
         {
             networkManager.SendMessage("B was sent");
         }
+        if (Input.GetMouseButtonUp(0))
+        {
+            Vector2 touchPosition = cam.ScreenToWorldPoint(Input.mousePosition);
+            Collider2D hit = Physics2D.OverlapCircle(touchPosition, touchRadius, boxLayermask);
+            if (hit)
+            {
+                HitBox(hit.GetComponent<Box>());
+            }
+        }
+
     }
+
+    private void HitBox (Box box)
+    {
+        if (!box.isMarked)
+        {
+            marks[box.index] = currentMark;
+            box.SetMarked(GetSprite(), currentMark, GetColor());
+            SwitchPlayer();
+        }
+    }
+
+    private void SwitchPlayer()
+    {
+        currentMark = (currentMark == Mark.X) ? Mark.O : Mark.X;
+    }
+    private Color GetColor()
+    {
+        return (currentMark == Mark.X) ? colorx : coloro;
+    }
+    private Sprite GetSprite()
+    {
+        return (currentMark == Mark.X) ? spritex : spriteo;
+    }
+    private void Start()
+    {
+        cam = Camera.main;
+        currentMark = Mark.X;
+        marks = new Mark[9];
+    }
+
 }
