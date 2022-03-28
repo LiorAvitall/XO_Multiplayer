@@ -13,43 +13,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SimpleSelectedItems:
-    m_Keys:
-    - .collabignore
-    - Assets/Scenes.meta
-    - Assets/Scenes/SampleScene.unity
-    - Assets/Scenes/SampleScene.unity.meta
-    - Assets/Scripts.meta
-    - Assets/Scripts/GameManager.cs
-    - Assets/Scripts/GameManager.cs.meta
-    - Assets/Scripts/NetworkManager.cs
-    - Assets/Scripts/NetworkManager.cs.meta
-    - Assets/Sprites.meta
-    - Assets/Sprites/O.png
-    - Assets/Sprites/O.png.meta
-    - Assets/Sprites/X.png
-    - Assets/Sprites/X.png.meta
-    - Packages/manifest.json
-    - Packages/packages-lock.json
-    - ProjectSettings/AudioManager.asset
-    - ProjectSettings/ClusterInputManager.asset
-    - ProjectSettings/DynamicsManager.asset
-    - ProjectSettings/EditorBuildSettings.asset
-    - ProjectSettings/EditorSettings.asset
-    - ProjectSettings/GraphicsSettings.asset
-    - ProjectSettings/InputManager.asset
-    - ProjectSettings/NavMeshAreas.asset
-    - ProjectSettings/Physics2DSettings.asset
-    - ProjectSettings/PresetManager.asset
-    - ProjectSettings/ProjectSettings.asset
-    - ProjectSettings/ProjectVersion.txt
-    - ProjectSettings/QualitySettings.asset
-    - ProjectSettings/TagManager.asset
-    - ProjectSettings/TimeManager.asset
-    - ProjectSettings/UnityConnectSettings.asset
-    - ProjectSettings/VFXManager.asset
-    - ProjectSettings/VersionControlSettings.asset
-    - 
-    m_Values: 0101010101010101010101010101010101010101010101010101010101010101010101
+    m_Keys: []
+    m_Values: 
   RevisionSummary: 
   ChangesSearchValue: 
   SelectedHistoryRevision: 
