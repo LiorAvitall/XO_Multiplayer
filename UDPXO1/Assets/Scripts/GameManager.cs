@@ -15,24 +15,42 @@ public class GameManager : MonoBehaviour
      [6][7][8]
      */
     #endregion
+    public int playernum = 0;
+    public int player1Port = 40000;
+    public int player2Port = 40001;
+    public bool XTurn = true;
+    public NetworkManager networkManager; //don't forget to drag in inspector
 
-    private void Start()
+    public void AssignPlayer(int index)
     {
+        if (index == 1)
+        {
+            playernum = index;
+            networkManager.ListeningPort = player1Port;
+            networkManager.SendingPort = player2Port;
+            XTurn = true;
+        }
+        else if (index == 2)
+        {
+            playernum = index;
+            networkManager.ListeningPort = player2Port;
+            networkManager.SendingPort = player1Port;
+            XTurn = false;
+        }
         networkManager.StartUDP();
     }
-
-    public NetworkManager networkManager; //don't forget to drag in inspector
 
     public void GotNetworkMessage(string message)
     {
         Debug.Log("got network message: " + message);
-        switch (message)
-        {
-            //do something with the message
-            //case 5:
-            //Do something
-        }
+        //switch (message)
+        //{
+        //    //do something with the message
+        //    //case 5:
+        //    //Do something
+        //}
     }
+
 
     public void PositionClicked(int position)
     {
