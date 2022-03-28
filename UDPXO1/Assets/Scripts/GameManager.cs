@@ -62,19 +62,18 @@ public class GameManager : MonoBehaviour
     public void GotNetworkMessage(string message)
     {
         Debug.Log("got network message: " + message);
-        //switch (message)
-        //{
-        //    //do something with the message
-        //    //case 5:
-        //    //Do something
-        //}
+
+        var messageInt = int.Parse(message);
+        messageInt = (int)currentMark;
+
+
     }
     public void PositionClicked(int position)
     {
         //draw the shape on the UI
 
         //update the other player about the shape
-        networkManager.SendMessage("");// your job to finish it
+        networkManager.SendMessage($"{position}");// your job to finish it
     }
 
     private void Update()
@@ -99,7 +98,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    private void HitBox (Box box)
+    public void HitBox (Box box)
     {
         if (!box.isMarked)
         {
